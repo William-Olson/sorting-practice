@@ -1,5 +1,6 @@
 
-const selectionSort = (arr) => {
+module.exports = function selection(arr)
+{
   const len = arr.length;
 
   for (let i = 0; i < len; i++) {
@@ -18,5 +19,3 @@ const selectionSort = (arr) => {
   return arr;
 };
 
-
-module.exports = selectionSort;

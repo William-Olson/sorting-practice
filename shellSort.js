@@ -1,7 +1,7 @@
 // const insertion = require('./insertionSort');
 
-
-module.exports = (arr) => {
+module.exports = function shell(arr)
+{
 
    let interval = 1;
    let len = arr.length;
@@ -29,20 +29,3 @@ module.exports = (arr) => {
    }
    return arr;
 };
-
-
-
-
-// module.exports = arr => {
-//   const len = arr.length;
-//   let h = 1;
-//   while ( h < len ) {
-//     h = 3 * h + 1;
-//   }
-//   while ( h > 0 ) {
-//     h = h / 3;
-//     for (let k = 1; k < h; k++) {
-//       
-//     }
-//   }
-// };

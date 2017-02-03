@@ -1,28 +1,35 @@
+const fs = require('fs');
+const dir = fs.readdirSync(__dirname);
 
-const bubble = require('./bubbleSort');
-const insert = require('./insertionSort');
-const selection = require('./selectionSort');
-const shell = require('./shellSort');
+// Define test data
+const arr = [ 7, 3, 9, 5, 1 ]; // testing array
+const getArray = () => arr.slice(); // get a copy of arr
 
-// run tests
-const arr = [ 7, 3, 9, 5, 1 ];
-
-// get a copy of arr
-const getArray = () => arr.slice();
-
-console.log('Bubble Sort...');
-console.log('before', arr);
-console.log('sorted:', bubble(getArray()), '\n');
-
-console.log('Insertion Sort...');
-console.log('before:', arr);
-console.log('sorted:', insert(getArray()), '\n');
-
-console.log('Selection Sort...');
-console.log('before:', arr);
-console.log('sorted:', selection(getArray()), '\n');
+function badSort(sortedArr)
+{
+  const expectedOutput = [ 1, 3, 5, 7, 9 ];
+  return sortedArr.join() !== expectedOutput.join();
+}
 
 
-console.log('Shell Sort...');
-console.log('before:', arr);
-console.log('sorted:', shell(getArray()));
+dir.forEach(file => {
+
+  if (!file.endsWith('.js') || file === 'index.js') {
+    return;
+  }
+
+  const sorter = require(`./${file}`);
+  const result = sorter( getArray() );
+
+  console.log(`Executing ${sorter.name} sort...`);
+  console.log('before', arr);
+  console.log('sorted:', result, '\n');
+
+  if (badSort(result)) {
+    console.error('Error: returned sorted array is not correct!!');
+    process.exit(1);
+  }
+
+});
+
+process.exit(0);

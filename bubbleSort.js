@@ -1,7 +1,6 @@
 
-
-
-module.exports = function bubbleSort (arr) {
+module.exports = function bubble(arr)
+{
 
   const len = arr.length;
 
