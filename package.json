@@ -1,0 +1,23 @@
+{
+  "name": "sorting-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "DEBUG=run*,val* node index.js",
+    "test": "echo 'no tests are defined'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/William-Olson/sorting-practice.git"
+  },
+  "author": "William Olson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/William-Olson/sorting-practice/issues"
+  },
+  "homepage": "https://github.com/William-Olson/sorting-practice#readme",
+  "dependencies": {
+    "debug": "^2.6.1"
+  }
+}

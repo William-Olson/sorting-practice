@@ -1,35 +1,43 @@
 const fs = require('fs');
-const dir = fs.readdirSync(__dirname);
+const debug = require('debug')('runner');
 
-// Define test data
-const arr = [ 7, 3, 9, 5, 1 ]; // testing array
-const getArray = () => arr.slice(); // get a copy of arr
+const sorterDir = fs.readdirSync(`${__dirname}/sorters`);
+const utils = require('./utils');
+const validation = require('./validator');
 
-function badSort(sortedArr)
-{
-  const expectedOutput = [ 1, 3, 5, 7, 9 ];
-  return sortedArr.join() !== expectedOutput.join();
-}
+/**
+ * Runs each file in the sorters directory with random number arrays
+ */
+for (let file of sorterDir) {
 
-
-dir.forEach(file => {
-
-  if (!file.endsWith('.js') || file === 'index.js') {
+  if (!file.endsWith('.js')) {
     return;
   }
 
-  const sorter = require(`./${file}`);
-  const result = sorter( getArray() );
+  // bring in the sorter and create an array to test
+  const sorter = require(`./sorters/${file}`);
+  const original = utils.getRandArr(10);
+  const arr = original.slice();
 
-  console.log(`Executing ${sorter.name} sort...`);
-  console.log('before', arr);
-  console.log('sorted:', result, '\n');
+  console.log('\n------------------------------------\n');
+  debug(`Executing ${sorter.name} sort...`);
+  console.log();
 
-  if (badSort(result)) {
-    console.error('Error: returned sorted array is not correct!!');
+  // clock the sorter
+  console.time(`\t ${sorter.name} exec time`);
+  const result = sorter(arr);
+  console.timeEnd(`\t ${sorter.name} exec time`);
+  console.log();
+
+  debug('original:', original);
+  debug('sorted:', result);
+  console.log();
+
+  // run tests on results
+  if (validation.fails(original, result)) {
+    console.error('Error: Validation Error!!');
     process.exit(1);
   }
-
-});
+}
 
 process.exit(0);
